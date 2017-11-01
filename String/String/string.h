@@ -29,7 +29,7 @@ public:
 	assign some string
 	params: char* - string to assign
 	*/
-	void Assign(MyString str);
+	void Assign(MyString &str);
 
 
 	/*
@@ -48,7 +48,7 @@ public:
 	size_t from- index to start assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(MyString str, size_t from, size_t length);
+	void Assign(MyString &str, size_t from, size_t length);
 
 	/*
 	assign string for some  length from the begining
@@ -64,7 +64,7 @@ public:
 	params: char * - string to assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(MyString str, size_t length);
+	void Assign(MyString &str, size_t length);
 
 	/*
 	assign multyple time some char
@@ -101,7 +101,7 @@ public:
 	Example : str.append(str2); ->"Writing "
 	params: char* string to append
 	*/
-	void Append(MyString otherString);
+	void Append(MyString &otherString);
 
 	/*
 	Example: str.append("prsize_t 10 and then 5 more",6,3); -> "10 "
@@ -117,7 +117,7 @@ public:
 	size_t from - index to start append from him
 	size_t to - index to stop
 	*/
-	void Append(MyString otherString, size_t from, size_t length);
+	void Append(MyString &otherString, size_t from, size_t length);
 
 	
 	/*
@@ -132,7 +132,7 @@ public:
 	size_t length - the length from the begining that want to append
 	Example: str.append("dots are cool",5);  ->   "dots "
 	*/
-	void Append(MyString otherString, size_t length);
+	void Append(MyString &otherString, size_t length);
 
 	/*
 	Example: str.append(10,'.');   ".........."
@@ -157,6 +157,6 @@ public:
 	/*
 	print string
 	*/
-	char* print();
+	char* GetString();
 
 };
