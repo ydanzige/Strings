@@ -8,7 +8,7 @@ MyString::MyString()
 {
 	
 }
-MyString::MyString(int length)
+MyString::MyString(size_t length)
 {
 	InitStr(length);
 }
@@ -22,7 +22,7 @@ MyString::~MyString()
 	}
 }
 
-int MyString::GetLength() {
+size_t MyString::GetLength() {
 
 	return m_size;
 }
@@ -33,12 +33,18 @@ void MyString::Assign(char *str)
 	strcpy_s(m_str, m_size + 1, str);
 }
 
-void MyString::Assign(char *str, int from, int length)
+void MyString::Assign(MyString str)
+{
+	InitStr(str.GetLength());
+	strcpy_s(m_str, m_size + 1, str.print());
+}
+
+void MyString::Assign(char *str, size_t from, size_t length)
 {	
 	if (from + length < strlen(str))
 	{
 		InitStr(length);
-		for (int i = 0; i < length; i++)
+		for (size_t i = 0; i < length; i++)
 		{
 			m_str[ i ] = str[ from + i ];
 		}
@@ -46,12 +52,25 @@ void MyString::Assign(char *str, int from, int length)
 	}
 }
 
-void MyString::Assign(char *str, int length)
+void MyString::Assign(MyString str, size_t from, size_t length)
+{
+	if (from + length < str.GetLength())
+	{
+		InitStr(length);
+		for (size_t i = 0; i < length; i++)
+		{
+			m_str[ i ] = str.print()[ from + i ];
+		}
+		m_str[ length ] = '\0';
+	}
+}
+
+void MyString::Assign(char *str, size_t length)
 {
 	if (length < strlen(str))
 	{
 		InitStr(length);
-		for (int i = 0; i < length; i++)
+		for (size_t i = 0; i < length; i++)
 		{
 			m_str[ i ] = str[ i ];
 		}
@@ -59,17 +78,30 @@ void MyString::Assign(char *str, int length)
 	}
 }
 
-void MyString::Assign(int count, char ch)
+void MyString::Assign(MyString str, size_t length)
+{
+	if (length < str.GetLength())
+	{
+		InitStr(length);
+		for (size_t i = 0; i < length; i++)
+		{
+			m_str[ i ] = str.print()[ i ];
+		}
+		m_str[ length ] = '\0';
+	}
+}
+
+void MyString::Assign(size_t count, char ch)
 {
 	InitStr(count);
-	for (int i = 0; i < count; i++)
+	for (size_t i = 0; i < count; i++)
 	{
 		m_str[ i ] = ch;
 	}
 	m_str[ count ] = '\0';
 }
 
-void MyString::InitStr(int length)
+void MyString::InitStr(size_t length)
 {
 	if (m_str)
 	{
@@ -77,13 +109,13 @@ void MyString::InitStr(int length)
 	}
 	m_size = length;
 	m_str = new char[ m_size + 1 ];
-	for (int i = 0; i < m_size; i++)
+	for (size_t i = 0; i < m_size; i++)
 	{
 		m_str[ i ] = ' ';
 	}
 }
 
-char MyString::CharAt(int index)
+char MyString::CharAt(size_t index)
 {
 	return m_str[ index ];
 }
@@ -91,8 +123,8 @@ char MyString::CharAt(int index)
 
 void MyString::Append(char *otherString)
 {
-	int newStrLen = strlen(otherString);
-	int oldSize = m_size;
+	size_t newStrLen = strlen(otherString);
+	size_t oldSize = m_size;
 	m_size += newStrLen;
 	char* str = new char[ m_size + 1 ];
 
@@ -105,17 +137,53 @@ void MyString::Append(char *otherString)
 	delete str;
 }
 
-void MyString::Append(char *otherString, int from, int length)
+void MyString::Append(MyString otherString)
+{
+	size_t newStrLen = otherString.GetLength();
+	size_t oldSize = m_size;
+	m_size += newStrLen;
+	char* str = new char[ m_size + 1 ];
+
+	strcpy_s(str, oldSize + 1, m_str);
+	strcat_s(str, m_size + 1, otherString.print());
+	delete m_str;
+
+	m_str = new char[ m_size + 1 ];
+	strcpy_s(m_str, m_size + 1, str);
+	delete str;
+}
+
+void MyString::Append(char *otherString, size_t from, size_t length)
 {
 	if (from + length < strlen(otherString))
 	{
-		int oldSize = m_size;
+		size_t oldSize = m_size;
 		m_size += length;
 		char* str = new char[ m_size + 1 ];
 		strcpy_s(str, strlen(str) + 1, m_str);
-		for (int i = 0; i < length; i++)
+		for (size_t i = 0; i < length; i++)
 		{
 			str[ oldSize + i ] = otherString[ from + i ];
+		}
+		str[ m_size ] = '\0';
+		delete m_str;
+		m_str = new char[ m_size + 1 ];
+		strcpy_s(m_str, strlen(m_str) + 1, str);
+		delete str;		
+	}
+}
+
+void MyString::Append(MyString otherString, size_t from, size_t length)
+{
+	if (from + length < otherString.GetLength())
+	{
+		size_t oldSize = m_size;
+		m_size += length;
+		char* str = new char[ m_size + 1 ];
+		strcpy_s(str, strlen(str) + 1, m_str);
+		for (size_t i = 0; i < length; i++)
+		{
+			str[ oldSize + i ] = otherString.print()[ from + i ];
 		}
 		str[ m_size ] = '\0';
 		delete m_str;
@@ -125,15 +193,15 @@ void MyString::Append(char *otherString, int from, int length)
 	}
 }
 
-void MyString::Append(char *otherString, int length)
+void MyString::Append(char *otherString, size_t length)
 {
 	if (length < strlen(otherString))
 	{
-		int oldSize = m_size;
+		size_t oldSize = m_size;
 		m_size += length;
 		char* str = new char[ m_size + 1 ];
 		strcpy_s(str, strlen(str) + 1, m_str);
-		for (int i = 0; i < length; i++)
+		for (size_t i = 0; i < length; i++)
 		{
 			str[ oldSize + i ] = otherString[ i ];
 		}
@@ -145,13 +213,33 @@ void MyString::Append(char *otherString, int length)
 	}
 }
 
-void MyString::Append(int count, char ch)
+void MyString::Append(MyString otherString, size_t length)
 {
-	int oldSize = m_size;
+	if (length < otherString.GetLength())
+	{
+		size_t oldSize = m_size;
+		m_size += length;
+		char* str = new char[ m_size + 1 ];
+		strcpy_s(str, strlen(str) + 1, m_str);
+		for (size_t i = 0; i < length; i++)
+		{
+			str[ oldSize + i ] = otherString.print()[ i ];
+		}
+		str[ m_size ] = '\0';
+		delete m_str;
+		m_str = new char[ m_size + 1 ];
+		strcpy_s(m_str, m_size + 1, str);
+		delete str;
+	}
+}
+
+void MyString::Append(size_t count, char ch)
+{
+	size_t oldSize = m_size;
 	m_size += count;
 	char* str = new char[ m_size + 1 ];
 	strcpy_s(str, strlen(str) + 1, m_str);
-	for (int i = 0; i < count; i++)
+	for (size_t i = 0; i < count; i++)
 	{
 		str[ oldSize + i ] = ch;
 	}
@@ -159,10 +247,10 @@ void MyString::Append(int count, char ch)
 	delete m_str;
 	m_str = new char[ m_size + 1 ];
 	strcpy_s(m_str, m_size + 1, str);
-	delete str;
+	delete str;	
 }
 
-int MyString::Compare(char *otherString)
+size_t MyString::Compare(char *otherString)
 {
 	return strcmp(m_str, otherString);
 }
