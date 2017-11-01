@@ -17,19 +17,19 @@ public:
 
 
 	//return the size of the string
-	size_t GetLength();
+	size_t GetLength()const;
 
 	/*
 	assign some string
 	params: char* - string to assign
 	*/
-	void Assign(char *str);
+	void Assign(const char *str);
 
 	/*
 	assign some string
 	params: char* - string to assign
 	*/
-	void Assign(MyString &str);
+	void Assign(const MyString &str);
 
 
 	/*
@@ -39,7 +39,7 @@ public:
 	size_t from- index to start assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(char *str, size_t from, size_t length);
+	void Assign(const char *str, const size_t from, const size_t length);
 
 	/*
 	assign string from index to some length
@@ -48,7 +48,7 @@ public:
 	size_t from- index to start assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(MyString &str, size_t from, size_t length);
+	void Assign(const MyString &str, const size_t from, const size_t length);
 
 	/*
 	assign string for some  length from the begining
@@ -56,7 +56,7 @@ public:
 	params: char * - string to assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(char *str, size_t length);
+	void Assign(const char *str, const size_t length);
 
 	/*
 	assign string for some  length from the begining
@@ -64,7 +64,7 @@ public:
 	params: char * - string to assign from him
 	size_t length - the length of assign string
 	*/
-	void Assign(MyString &str, size_t length);
+	void Assign(const MyString &str, const size_t length);
 
 	/*
 	assign multyple time some char
@@ -72,19 +72,19 @@ public:
 	size_t count - nymber of multyple
 	char ch - the char to assign
 	*/
-	void Assign(size_t count, char ch);
+	void Assign(const size_t count, const char ch);
 
 
 	/*
 	delete the old string and init the new one
 	*/
-	void InitStr(size_t length);
+	void InitStr(const size_t length);
 
 	/*
 	return char in spesific index
 	param : size_t index of char
 	*/
-	char CharAt(size_t index);
+	char CharAt(const size_t index);
 
 
 	/*
@@ -93,7 +93,7 @@ public:
 	Example : str.append(str2); ->"Writing "
 	params: char* string to append
 	*/
-	void Append(char *otherString);
+	void Append(const char *otherString);
 
 	/*
 	std::string str2="Writing ";
@@ -101,7 +101,7 @@ public:
 	Example : str.append(str2); ->"Writing "
 	params: char* string to append
 	*/
-	void Append(MyString &otherString);
+	void Append(const MyString &otherString);
 
 	/*
 	Example: str.append("prsize_t 10 and then 5 more",6,3); -> "10 "
@@ -109,7 +109,7 @@ public:
 	size_t from - index to start append from him
 	size_t to - index to stop
 	*/
-	void Append(char *otherString, size_t from, size_t length);
+	void Append(const char *otherString, const size_t from, const size_t length);
 
 	/*
 	Example: str.append("prsize_t 10 and then 5 more",6,3); -> "10 "
@@ -117,7 +117,7 @@ public:
 	size_t from - index to start append from him
 	size_t to - index to stop
 	*/
-	void Append(MyString &otherString, size_t from, size_t length);
+	void Append(const MyString &otherString, const size_t from, const size_t length);
 
 	
 	/*
@@ -125,23 +125,23 @@ public:
 	size_t length - the length from the begining that want to append
 	Example: str.append("dots are cool",5);  ->   "dots "
 	*/
-	void Append(char *otherString, size_t length);
+	void Append(const char *otherString, const size_t length);
 
 	/*
 	param: string the string
 	size_t length - the length from the begining that want to append
 	Example: str.append("dots are cool",5);  ->   "dots "
 	*/
-	void Append(MyString &otherString, size_t length);
+	void Append(const MyString &otherString, const size_t length);
 
 	/*
 	Example: str.append(10,'.');   ".........."
 	params: counter - size_t the number of multple time the char in the second param
 	char - char to append
 	*/
-	void Append(size_t count, char ch);
+	void Append(const size_t count, const char ch);
 
-	size_t Compare(char *otherString);
+	size_t Compare(const char *otherString);
 
 	/*
 	check if size is 0
@@ -157,6 +157,6 @@ public:
 	/*
 	print string
 	*/
-	char* GetString();
+	char* GetString()const;
 
 };
