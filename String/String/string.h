@@ -8,9 +8,8 @@ private:
 public:
 	//ctor
 	MyString();
-	
-
 	MyString(size_t length);
+	MyString(const MyString&);
 
 	//dtor
 	~MyString();

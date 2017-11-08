@@ -13,6 +13,11 @@ MyString::MyString(size_t length)
 	InitStr(length);
 }
 
+MyString::MyString(const MyString &otherStr):m_str(NULL), m_size(0)
+{
+	Assign(otherStr.GetString());
+}
+
 MyString::~MyString()
 {
 	if (m_str)
